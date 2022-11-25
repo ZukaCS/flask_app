@@ -1,0 +1,15 @@
+{%extends "layout.html"%}
+{%block style%}
+<link rel="stylesheet" href="/static/styles.css"> 
+<link rel="stylesheet" href="/static/favourites.css">
+{%endblock%}
+{%block main%}
+    <div class="grid-container">
+        {%for data in DATAS%}
+            <div class="grid-item">
+                <img src="{{data["flag"]}}"}
+                <p>{{data["name"]}}</p>
+            </div>
+        {%endfor%}
+    </div>
+{%endblock%}
