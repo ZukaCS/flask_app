@@ -6,10 +6,27 @@
 {%block main%}
     <div class="grid-container">
         {%for data in DATAS%}
-            <div class="grid-item">
-                <img src="{{data["flag"]}}"}
+            <div class="grid-item" id="{{data.name}}">
+                <img src="{{data["flag"]}}">
                 <p>{{data["name"]}}</p>
+                <a href="#" class="remove" onclick='remove( "{{ data.name }}" )'>Remove</a>
             </div>
         {%endfor%}
-    </div>
+    </div>  
+    <script>
+        function remove(country){
+            console.log(country);
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:5000/remove",
+                data: {"country": country},
+
+                success: function(response){
+                    if(response=="removed from favourites"){
+                        document.getElementById(country).remove();
+                    }
+                }
+            })
+        }
+    </script>
 {%endblock%}

@@ -154,6 +154,13 @@ def addFav():
         conn.commit()
         return("success")
 
+@app.route("/remove", methods=["POST"])
+def remove():
+    if request.method=="POST":
+        country = request.form.get("country")
+        conn.execute("DELETE FROM favourites where id in (SELECT id from favourites where person_id = ? and country = ?)", (session["user_id"], country))
+        conn.commit()
+        return ("removed from favourites")
 if __name__ == "__main__":
     app.run(debug=True)
     

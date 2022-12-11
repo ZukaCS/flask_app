@@ -21,4 +21,11 @@ img{
     display: flex;
     flex-direction: column;
 }
-
+.grid-item > a {
+    color: gray;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.grid-item > a:hover{
+    color: black;
+}
