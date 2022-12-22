@@ -12,11 +12,12 @@ nav {
     background-color: #222222;
 }
 body {
-    background: linear-gradient(#7b4397 , #dc2430);
+    background: url("regular.jpg");
     background-attachment:fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    
+    
 }
 nav h1{
     color: white;   
