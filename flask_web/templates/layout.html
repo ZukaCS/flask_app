@@ -17,12 +17,14 @@
         {%if session["user_id"]%} 
         <div>
             <a href="/favourites" class="favourites-nav">Favourites</a>
+            <a href="/reportabug">Report a bug</a>
             <a href="/logOut">Log out</a>
         </div>
         {%else%}
         <div>
             <a href="/favourites" class="favourites-nav">Favourites</a>
             <a href="/register">Register</a>
+            <a href="/reportabug">Report a bug</a>
             <a href="/login">Log in</a>
         </div>
         {%endif%}
