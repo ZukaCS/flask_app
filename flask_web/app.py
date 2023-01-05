@@ -58,14 +58,17 @@ def index():
 @app.route("/country", methods=["POST", "GET"])
 def country():
     if request.method == "GET":
-        country = request.args.get("name")
-        if country not in countries:
+        country = request.args.get("name").lower()
+        if country not in [name.lower() for name in countries]:
             return render_template("error.html", error="Country named '" + country + "' does not exist")
         else:
             if "user_id" in session:
                 inFavourites = conn.execute("SELECT id from favourites where person_id = ? and country = ?", (session["user_id"], country)).fetchone()
+                print(country_index)
+                country = country.title()
                 return render_template("country.html", data=DATA[country_index[country]], inFavourites=inFavourites)
             else:
+                country = country.title()
                 return render_template("country.html", data=DATA[country_index[country]])
 
 
