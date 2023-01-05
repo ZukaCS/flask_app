@@ -29,3 +29,6 @@ img{
 .grid-item > a:hover{
     color: black;
 }
+img:hover{
+    cursor: pointer;
+}
