@@ -7,8 +7,8 @@
     <div class="grid-container">
         {%for data in DATAS%}
             <div class="grid-item" id="{{data.name}}">
-                <img src="{{data["flag"]}}">
-                <p>{{data["name"]}}</p>
+                <img class="flag" onclick ='redirect( "{{ data.name }}" )' src="{{data["flag"]}}">
+                <p class="name">{{data["name"]}}</p>
                 <a href="#" class="remove" onclick='remove( "{{ data.name }}" )'>Remove</a>
             </div>
         {%endfor%}
@@ -27,6 +27,9 @@
                     }
                 }
             })
+        }
+        function redirect(name){
+            window.location.href = "/country?name=" + name;
         }
     </script>
 {%endblock%}
