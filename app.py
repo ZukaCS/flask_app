@@ -4,8 +4,7 @@ from datetime import date
 from tempfile import mkdtemp
 
 import requests
-from flask import (Flask, current_app, flash, jsonify, make_response, redirect,
-                   render_template, request, session, url_for)
+from flask import Flask, redirect, render_template, url_for, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from email.message import EmailMessage
@@ -19,6 +18,7 @@ print("opened successfully")
 
 #configure email
 email_sender = 'bugscountryinfo@gmail.com'
+#this is third party password so no one can login into this account
 email_password = 'zazsazegqycndlom'
 email_receiver = 'zukakekelidze4@gmail.com'
 
@@ -40,12 +40,10 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
 headers = {
 	"X-RapidAPI-Key": "8451bff402msh94c0c09e88de1a8p11369ejsn97e8c47c557a",
 	"X-RapidAPI-Host": "ajayakv-rest-countries-v1.p.rapidapi.com"
 }
-
 url = "https://restcountries.com/v3.1/all"
 
 
@@ -64,23 +62,24 @@ countries = sorted(countries)
 def index():
     return render_template("index.html", countries=countries)
 
-
 @app.route("/country", methods=["POST", "GET"])
-def country():
+def search():
     if request.method == "GET":
         country = request.args.get("name").lower()
+        if country == "":
+            return render_template("error.html", error = "Country name input field is empty")
         if country not in [name.lower() for name in countries]:
             return render_template("error.html", error="Country named '" + country + "' does not exist")
         else:
+            country =request.args.get("name")
             if "user_id" in session:
                 inFavourites = conn.execute("SELECT id from favourites where person_id = ? and country = ?", (session["user_id"], country)).fetchone()
-                print(country_index)
+                print(inFavourites)
                 country = country.title()
                 return render_template("country.html", data=DATA[country_index[country]], inFavourites=inFavourites)
             else:
                 country = country.title()
                 return render_template("country.html", data=DATA[country_index[country]])
-
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -105,7 +104,6 @@ def login():
         else:
             return ("Username or password is incorrect")
 
-
 @app.route("/logOut")
 def logout():
     session.clear()
@@ -129,7 +127,6 @@ def register():
     else:
         return render_template("register.html")
         
-
 @app.route("/favourites", methods=["POST", "GET"])
 def favourites():
     
@@ -159,6 +156,7 @@ def favourites():
 def addFav():
     if request.method == "POST":
         country = request.form.get("country")
+        print(conn.execute("SELECT id from favourites where person_id = ? and country = ?", (session["user_id"], country)).fetchone())
         if conn.execute("SELECT id from favourites where person_id = ? and country = ?", (session["user_id"], country)).fetchone():
             conn.execute("DELETE FROM favourites where id in (SELECT id from favourites where person_id = ? and country = ?)", (session["user_id"], country))
             conn.commit()
@@ -190,10 +188,10 @@ def reported():
         em['To'] = email_receiver
         if text == "" and subject == "":
             return "empty"
-        if len(text) < 40:
-            return "text less than 40 chars" 
-        if len(subject) < 10:
-            return "subject less than 10 chars"
+        if len(text) < 20:
+            return "text less than 20 chars" 
+        if len(subject) < 5:
+            return "subject less than 5 chars"
 
         em['Subject'] = subject
         em.set_content(text)

@@ -16,17 +16,21 @@
         <textarea  rows="4" class="text" cols="50" type="text" name="text" placeholder = "describe the bug" required></textarea>
       </div>
 
-      <input type="button" value="submit" onclick="reportPost()">
+      <input type="button" value="submit" class = "submitBtn" onclick="reportPost()">
   </form>
 </div>
 <script>
   function reportPost(){
     var subject = $(".subject").val();
     var text = $(".text").val();
+   
+    var button = document.querySelector(".submitBtn");
+    button.disabled = true;
+    button.style.backgroundColor = "silver";
 
     $.ajax({
       type: "POST",
-      url: "http://127.0.0.1:5000/reported",
+      url: "{{ url_for('reported') }}",
       data: {"subject": subject, "text": text},
       
       success: function(response){
@@ -44,20 +48,22 @@
                             text: '',
                         })
                   }
-                  if (response == "text less than 40 chars"){
+                  if (response == "text less than 20 chars"){
                         Swal.fire({
                             icon: 'error',
                             title: 'Text length',
-                            text: 'Text must be at least 40 characters',
+                            text: 'Text must be at least 20 characters',
                         })
                   }
-                  if (response == "subject less than 10 chars"){
+                  if (response == "subject less than 5 chars"){
                         Swal.fire({
                             icon: 'error',
                             title: 'Subject length',
-                            text: 'Subject must be at least 10 characters',
+                            text: 'Subject must be at least 5 characters',
                         })
                   }
+                  button.disabled = false;
+                  button.style.backgroundColor = "blue";
    }
   })
 }

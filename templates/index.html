@@ -12,7 +12,7 @@
             <input placeholder="Country Name" class = "country-name" type="text" name="name" list="countryname">
                 <datalist id="countryname">
                     {%for country in countries%}
-                        <option v+alue="{{country}}"></option>
+                        <option value="{{country}}"></option>
                     {%endfor%}
                 </datalist>
             </div>
@@ -22,5 +22,6 @@
         </form>
     </div>
 
+    
 
 {% endblock %}
