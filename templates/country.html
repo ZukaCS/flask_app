@@ -1,0 +1,63 @@
+{%extends "layout.html"%}
+    {%block style%}
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/country.css">
+    <script src="/static/script.js" defer></script>
+    
+    {%endblock%}
+
+    {%block main%}
+    <div class = "container">
+        <div class = "flagDiv">
+            <img src="{{data.flags["png"]}}">
+        </div>
+        <div class = "common">
+            <h2>Name: {{data.name.common}}</h2>
+            <h2>Capital: {{data.capital.0}}</h2>
+            <h2>Region: {{data.region}}</h2>
+            <h2>Area: {{data.area}} km<sup>2</sup></h2>
+            <h2>Population: {{data.population}}</h2>
+            <h2>Independent: {{data.independent}}</h2>
+        </div>
+        {%if session["user_id"]%}
+        <div class ="heart">
+            {%if inFavourites%}
+            <a onclick="addFavourites()" class="favourite-link-inFavourites"><i class="fa fa-heart"></i></a>
+            {%else%}
+            <a onclick="addFavourites()" class="favourite-link"><i class="fa fa-heart-o"></i></a>
+            {%endif%}
+        </div>
+        {%endif%}
+    </div>
+    <script>
+    
+        function addFavourites(){
+            var country = '{{ data.name.common }}';
+            
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:5000/add",
+                data: {"country":country},
+
+                success: function(response){
+                    if (response == "success"){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Succesfully added to favourites',
+                            text: '{{data.name.common}} was added to favourites',
+                        })
+                        document.querySelector(".heart").innerHTML = '<a onclick="addFavourites()" class="favourite-link-inFavourites"><i class="fa fa-heart"></i></a>';
+                    }
+                    if (response == "removed from favourites"){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Succesfully removed from favourites',
+                            text: '{{data.name.common}} was removed from favourites',
+                        })
+                        document.querySelector(".heart").innerHTML = '<a onclick="addFavourites()" class="favourite-link"><i class="fa fa-heart-o"></i></a>';
+                    }
+                }
+            })
+        }
+    </script>
+    {%endblock%}

@@ -1,0 +1,58 @@
+
+header{
+    font-family: Inconsolata;
+    width: 200px;
+    height: 100px;
+    font-weight: 700;
+    font-size: 24px;
+    position: relative;
+    top: 40px; 
+    left:77px;
+}
+main{
+    display: flex;
+    margin: 20px;
+    justify-content: space-evenly;
+}
+img{
+    width: 540px;
+    height: auto;
+}
+h1{
+    font-family: "Space Mono";
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 94px;
+    color: #333333;
+}
+
+p{
+    font-family: "Space Mono";
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 35px;
+    color: #4F4F4F;
+}
+
+.par{
+    width: 381px;
+    height: 108px;
+}
+.main-text{
+    width: 586px;
+    height: 190px;
+}
+button{
+    width: 216px;
+    height: 68px;
+    margin-top: 50px;
+    background-color: #333333;
+    font-family: "Space Mono";
+    font-weight: 700;
+    font-size: 14px;
+    color: #FFFFFF;
+    border-radius: 3px;
+}
+button:hover{
+    cursor: pointer;
+}
