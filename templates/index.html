@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{%block style%} 
+<link rel="stylesheet" href="/static/index.css">
+<link rel="stylesheet" href="/static/styles.css">
+{%endblock%}
+
+{% block main %}
+    <div class="form-wrap">
+        <h1>Search for a country</h1>
+        <form action="/country" method="get">
+            <div class ="txt-div">
+            <input placeholder="Country Name" class = "country-name" type="text" name="name" list="countryname">
+                <datalist id="countryname">
+                    {%for country in countries%}
+                        <option value="{{country}}"></option>
+                    {%endfor%}
+                </datalist>
+            </div>
+            <div class = "submit-div">
+                <input style="font-size: 16px;"type="submit" value = "Search">
+            </div>
+        </form>
+    </div>
+
+    
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{%extends "layout.html"%}
+{%block style%}
+    <link rel="stylesheet" href="/static/styles.css"> 
+    <link rel="stylesheet" href="/static/login.css">
+{%endblock%}
+{%block main%} 
+    
+    <div class = center-div>
+        <div class="login-wrap">
+            <h1>Register</h1>
+            <form action="/register" method="post">
+                <div class="username-div" style="margin-bottom: 10px;">
+                    <input type="text" name="username" placeholder="username" class="username" required>
+                </div>
+                <div class="pass-div">
+                    <input type="password" name="password" placeholder="password" class = "password" required>
+                </div>
+                <div class="conf-pass-div">
+                    <input type="password" name="conf-password" placeholder="confirm password" class="conf-pass" required>
+                </div>
+
+                <input type="button" value="register" class=".submit" onclick="performPostReg()">
+            </form>
+        </div>
+    </div>
+    <script>
+        function performPostReg(){
+            var username = $(".username").val();
+            var pass = $(".password").val();
+            var confPass = $(".conf-pass").val();
+            if (pass != confPass){
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password and Confirmation does not match',
+                })
+            }
+            else {
+                $.ajax({
+                type: "POST",
+                url: "{{ url_for('register') }}",
+                data: {"username" : username, 
+                    "pass" : pass,
+                    "conf-pass" : confPass
+                    },
+                success: function(response){
+                    
+                    if (response == "Username already exists"){
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response,
+                        })
+                    }
+                    if (response == "Success"){
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Succesfully registered',
+                            text: response,
+                        })
+                    }
+                    if (response == "Successful register"){
+                        window.location.href = "http://127.0.0.1:5000";
+                    }
+                            
+                }
+            })
+            }
+            
+        }
+    </script>
+{%endblock%}
