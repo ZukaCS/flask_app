@@ -1,0 +1,4 @@
+myenv/
+flask_session/
+__pychache__/
+gitignore.gitignore_global
