@@ -49,6 +49,7 @@ By using Javascript I made the website more interactive. When I started making t
       - `images` - contains all images that website uses
       - **database.db** - database file
    - `app.py` - flask application
+   - `requirements.txt` - Project dependencies
 
 
 ## The end
