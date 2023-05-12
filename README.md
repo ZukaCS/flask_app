@@ -55,10 +55,3 @@ By using Javascript I made the website more interactive. When I started making t
    - **requirements.txt** - project dependencies
 
 
-## The end
-
-This is my final project for CS50x. I learned a lot in the process of making the project. 
-
-I am very glad that I took this course. The journey had its ups and downs however in the end, I made it.
-
-**This was CS50.**
